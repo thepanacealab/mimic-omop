@@ -3,9 +3,9 @@
 This work is a simplified version of the following project (Paris et al.): https://github.com/MIT-LCP/mimic-omop
 
 ## Requirements
-- SQLite 3
+- SQLite 3 (Download link: https://www.sqlite.org/download.html)
 - A MIMICIII database (each table should be in the CSV file format)
-- A vocabulary dataset loaded from Athena (https://athena.ohdsi.org/)
+- A vocabulary dataset downloaded from Athena (https://athena.ohdsi.org/)
 
 ## Implementation process
 ### Building MIMIC schema and loading data
