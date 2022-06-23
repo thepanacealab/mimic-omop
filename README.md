@@ -36,7 +36,7 @@ sqlite3 omop.db < 'buildOMOP/OMOP_ddl_updated(SQLite).sql'
 sqlite3 omop.db < 'buildOMOP/omop_vocab_load.sql' 'mimicToSQL/mimic_gcpt_tables.sql'
 ```
 
-###Loading concepts from Athena and remaining manual mappings
+### Loading concepts from Athena and remaining manual mappings
 
 Since part of the manual mappings previously loaded requires the Athena vocabulary, the following lines should be executed in the following order (inside the SQLite terminal):
 
@@ -51,7 +51,7 @@ ATTACH DATABASE 'mimicIII.db' as MIMIC;
 sqlite3 mimicIII.db < 'mimicToSQL/mimic_gcpt_tables_part2.sql'
 ```
 
-###ETL process (MIMIC-OMOP)
+### ETL process (MIMIC-OMOP)
 
 The following scripts should be executed in the following order. This block of code will transform all data from the MIMIC schema into the OMOP Common Data Model.
 
@@ -74,7 +74,7 @@ ATTACH DATABASE 'mimicIII.db' as MIMIC;
 .read 'etl_scripts/15_etl_script_dose_era.sql'
 ```
 
-###ETL validation process (MIMIC-OMOP)
+### ETL validation process (MIMIC-OMOP)
 
 The following lines will validate each OMOP table in order to check for any errors or inconsistencies in the transformed database. Some key points that are evaluated are the following:
 - Duplicated records
