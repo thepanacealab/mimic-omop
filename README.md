@@ -5,6 +5,7 @@ This work is a simplified version of the following project (Paris et al.): https
 ## Requirements
 - SQLite 3
 - A MIMICIII database (each table should be in the CSV file format)
+- A vocabulary dataset loaded from Athena (https://athena.ohdsi.org/)
 
 ## Implementation process
 ### Building MIMIC schema and loading data
