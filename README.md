@@ -25,3 +25,51 @@ Moreover, it is important to mention these manual mappings were updated since so
 sqlite3 mimicIII.db < 'mimicToSQL/mimic_gcpt_tables.sql'
 ```
 
+### Building OMOP schema and loading vocabularies
+
+The following command liens will generate the OMOP schema and will load all the vocabularies obtained from Athena.
+
+**NOTE: All loaded vocabularies from Athena should be located under the *athena_updated* folder**
+
+```bash
+sqlite3 omop.db < 'buildOMOP/OMOP_ddl_updated(SQLite).sql'
+sqlite3 omop.db < 'buildOMOP/omop_vocab_load.sql' 'mimicToSQL/mimic_gcpt_tables.sql'
+```
+
+###Loading concepts from Athena and remaining manual mappings
+
+Since part of the manual mappings previously loaded requires the Athena vocabulary, the following lines should be executed in the following order (inside the SQLite terminal):
+
+```SQL
+ATTACH DATABASE 'omop.db' as OMOP;
+ATTACH DATABASE 'mimicIII.db' as MIMIC;
+.read 'etl_scripts/1_etl_script_concept.sql'
+.read 'mimicToSQL/concept/datetimeevents_to_concept.sql'
+```
+
+```bash
+sqlite3 mimicIII.db < 'mimicToSQL/mimic_gcpt_tables_part2.sql'
+```
+
+###ETL process (MIMIC-OMOP)
+
+The following scripts should be executed in the following order. This block of code will transform all data from the MIMIC schema into the OMOP Common Data Model.
+
+```SQL
+ATTACH DATABASE 'omop.db' as OMOP;
+ATTACH DATABASE 'mimicIII.db' as MIMIC;
+.read 'etl_scripts/2_etl_script_care_site.sql'
+.read 'etl_scripts/3_etl_script_provider.sql'
+.read 'etl_scripts/4_etl_script_person.sql'
+.read 'etl_scripts/5_etl_script_death.sql'
+.read 'etl_scripts/6_etl_script_visit_occurrence.sql'
+.read 'etl_scripts/7_etl_script_observation_period.sql'
+.read 'etl_scripts/8_etl_script_visit_detail.sql'
+.read 'etl_scripts/9_etl_script_note.sql'
+.read 'etl_scripts/10_etl_script_procedure_occurrence.sql'
+.read 'etl_scripts/11_etl_script_condition_occurrence.sql'
+.read 'etl_scripts/12_etl_script_drug_exposure.sql'
+.read 'etl_scripts/13_etl_script_observation.sql'
+.read 'etl_scripts/14_etl_script_measurement.sql'
+.read 'etl_scripts/15_etl_script_dose_era.sql'
+```
