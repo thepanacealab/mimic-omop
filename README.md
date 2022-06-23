@@ -73,3 +73,28 @@ ATTACH DATABASE 'mimicIII.db' as MIMIC;
 .read 'etl_scripts/14_etl_script_measurement.sql'
 .read 'etl_scripts/15_etl_script_dose_era.sql'
 ```
+
+###ETL validation process (MIMIC-OMOP)
+
+The following lines will validate each OMOP table in order to check for any errors or inconsistencies in the transformed database. Some key points that are evaluated are the following:
+- Duplicated records
+- Check all records are mapped to standard concepts (from the vocabularies loaded from Athena)
+- Comparing the patient's data in both databases (MIMICIII and OMOP).
+- Comparing the number of ICU stays in both databases.
+- Comparing the number of admissions in both databases.
+
+**NOTE: It is recommended to execute each of the following lines in separated runs**
+```SQL
+.read 'etl_validation/1_provider_check.sql'
+.read 'etl_validation/2_person_check.sql'
+.read 'etl_validation/3_death_check.sql'
+.read 'etl_validation/4_visit_occurrence_check.sql'
+.read 'etl_validation/5_observation_period_check.sql'
+.read 'etl_validation/6_visit_detail_check.sql'
+.read 'etl_validation/7_note_check.sql'
+.read 'etl_validation/8_procedure_occurrence_check.sql'
+.read 'etl_validation/9_condition_occurrence_check.sql'
+.read 'etl_validation/10_drug_exposure_check.sql'
+.read 'etl_validation/11_observation_check.sql'
+.read 'etl_validation/12_measurement_check.sql'
+```
